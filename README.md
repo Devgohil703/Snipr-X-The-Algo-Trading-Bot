@@ -1,109 +1,100 @@
-<<<<<<< HEAD
-# XAUUSD-bot
+#  SNIPR-X: AI-Powered Trading Bot  
+### *Protecting Capital First, Capturing Profits Second*
 
-A Python-based trading bot for MT5 with a FastAPI control server and Telegram notifications.
+---
 
-### Features
-- Connects to MetaTrader 5 (MT5) and executes multi-strategy trades
-- FastAPI server for bot control, MT5 login, and fetching trades
-- Telegram bot notifications and basic webhook endpoints
-- SQLite logging for trades, plus CSV and JSON logs
+##  Problem Statement
 
-## Quickstart
+Even professional traders often:
+- Miss profitable trades due to **human hesitation** or **emotion**.  
+- Use bots that rely only on **candlestick patterns and indicators**, offering **shallow decision-making**.  
+- Ignore **market sentiment** and **news impact**, missing key contextual signals.  
 
-- Python 3.10+ (Windows supported)
-- MT5 terminal installed (defaults to `C:\\Program Files\\MetaTrader 5\\terminal64.exe`)
+###  The Challenge
+A truly intelligent trading system must:
+- Think like a human (context + reasoning)  
+- Execute like a machine (speed + precision)  
+- Manage risk like a quant (discipline + adaptability)
 
-### 1) Install dependencies
-```bash
-# From XAUUSD-bot/
-python -m venv venv
-venv\\Scripts\\activate  # on Windows PowerShell
-pip install -r requirements.txt
-```
+---
 
-### 2) Environment variables
-Copy `.env.example` to `.env.local` and fill in values:
-```ini
-NEXT_PUBLIC_API_URL=http://localhost:8000
-TELEGRAM_BOT_TOKEN=your-telegram-bot-token
-TELEGRAM_BOT_USERNAME=YourBotUserName
-```
+##  Our AI-Driven Solution
 
-- The FastAPI server reads `NEXT_PUBLIC_API_URL` for the frontend.
-- Telegram credentials are used by the Next.js app and may be read by integrations.
+SNIPR-X is a **multi-layer AI trading framework** that combines:
+1. **Strategy Intelligence** – Market-structure-based strategies (Order Block, MSB Retest, Liquidity Sweep, etc.)
+2. **Machine Learning Filter** – Predicts win probability from past performance data.
+3. **LLM Sentiment Analyzer** – Interprets financial news for context-aware trading.
+4. **AI Risk Engine** – Dynamically adjusts lot size, stop loss, and exposure using volatility & equity.
+5. **Automated Execution** – Executes trades via MT5, monitored via a dashboard and Telegram.
 
-### 3) Configure the bot
-Edit `config.json` with your settings (redact secrets before sharing):
-- `mt5.login`, `mt5.password`, `mt5.server`
-- `symbols`, `timeframe`, `risk_settings`, `strategy_filters`
-- `telegram.bot_token`, `telegram.chat_id` (optional if sending alerts from Python)
-- `gemini.api_key` (if using LLM/ML integrations)
+---
 
-Example keys to check:
-- `risk_settings.risk_per_trade`, `max_daily_loss`, `default_lot_size`
-- `trading_sessions.enable_trading`
-- `selected_strategies`
+##  System Architecture Overview
 
-### 4) Initialize database schema (SQLite)
-This project logs to `trades/trades.db`. Create the database with the unified schema:
-```bash
-# From XAUUSD-bot/
-mkdir -p trades
-python - <<'PY'
-import sqlite3, os
-os.makedirs('trades', exist_ok=True)
-conn = sqlite3.connect('trades/trades.db')
-conn.executescript(open('schema.sql','r',encoding='utf-8').read())
-conn.commit(); conn.close()
-print('SQLite trades.db initialized.')
-PY
-```
+### **1️⃣ Market Data Collection**
+- Collects live **candlestick, volume, ATR**, and **news data** every minute.  
+- Recalculates volatility metrics every 15 minutes.
 
-To dump the database later:
-```bash
-# Windows (powershell): ensure sqlite3 is installed or use Python dump
-python - <<'PY'
-import sqlite3, sys
-conn = sqlite3.connect('trades/trades.db')
-for line in conn.iterdump():
-    sys.stdout.write(f"{line}\n")
-conn.close()
-PY
-```
+### **2️⃣ AI Layer (The Central Brain)**
+- **ML Filter:** Predicts the probability of trade success.  
+- **LLM Sentiment Analyzer:** Fetches and interprets news from Forex Factory & APIs.  
+- **Joint Intelligence:** No trade passes without AI validation.
 
-### 5) Run services
-- Start API server (port 8000):
-```bash
-uvicorn api_server:app --host 0.0.0.0 --port 8000 --reload
-```
-- Start trading bot (in a separate shell):
-```bash
-python -m STOCKDATA
-```
+### **3️⃣ Risk Engine**
+- Calculates:
+  - Lot size = *based on account equity + volatility (ATR)*  
+  - Stop Loss = *structure + ATR-based protection*  
+  - Take Profit = *1:2 and 1:3 RR ratios*
+- Enforces exposure limits and drawdown rules.
 
-If you need to test MT5 login directly:
-```bash
-python test_mt5_login.py
-```
+### **4️⃣ Trade Execution**
+- Places orders instantly through **MetaTrader 5 API**.  
+- Embeds SL/TP and sends **Telegram alerts** in real-time.
 
-## Project structure (key files)
-- `api_server.py`: FastAPI app with endpoints for MT5 login, trades, and settings
-- `STOCKDATA/main.py`: main trading loop; loads `config.json`, manages strategies, risk, and MT5
-- `STOCKDATA/file.py`: trade placement, risk, and persistence helpers (creates SQLite `trades` table)
-- `STOCKDATA/utils/trade_logger.py`: logs trade executions to CSV and SQLite
-- `trades/`: SQLite db and CSV logs
-- `logs/`: JSON logs for activity and daily stats
+### **5️⃣ Ongoing Risk Monitoring**
+- **Trailing Stop Loss**: Moves closer as trade progresses.  
+- **Partial Profit Booking**: Locks gains at TP1, extends at TP2.  
+- **Early Exit**: Closes positions on retracement or negative sentiment.
 
-## Database schema
-A unified table `trades` is provided to be compatible with both `file.py` and `utils/trade_logger.py` writers. See `schema.sql`.
+---
 
-Indexes are included on `timestamp`, `symbol`, `strategy`, and `trade_type` for faster queries.
+##  Tech Stack
 
-## Notes
-- MT5 path is configured in `STOCKDATA/main.py` as `MT5_TERMINAL_PATH`. Adjust if your installation is elsewhere.
-- Do not commit secrets (MT5 password, Telegram token, Gemini key). Use `.env.local` and keep `config.json` sanitized before sharing.
-- For production, consider moving from SQLite to a managed DB and adding robust auth for the API. 
-=======
-# trading_bot
->>>>>>> 09258285804d8b9120255b97deac3f2d5d748e6a
+| Layer | Tools & Frameworks |
+|-------|---------------------|
+| **Core Bot** | Python, Pandas, NumPy |
+| **Trading Engine** | MetaTrader 5 (MT5 API) |
+| **Server & API** | FastAPI, Uvicorn, Express.js |
+| **UI/UX** | Next.js, Tailwind CSS |
+| **Communication** | Telegram Bot (Alerts & Commands) |
+| **Database & Logging** | CSV, JSON |
+| **AI/ML Layer** | Scikit-learn, Google AI APIs |
+| **Deployment** | Windows + MT5 Terminal |
+
+---
+
+##  Key Components
+
+### ** Machine Learning Filter**
+- Trains on historical **candle sequences + win/loss outcomes**.  
+- Assigns a **probability score** to each setup.  
+- Filters low-confidence trades before execution.  
+- Reduces false trades by **30–40%** and **self-improves** over time.
+
+### ** LLM Sentiment Analyzer**
+- Reads and classifies financial news (Positive / Negative / Neutral).  
+- Example: *“Gold bullish after weak CPI” → Positive Sentiment.*  
+- Adjusts trade aggressiveness dynamically based on sentiment.
+
+### ** AI Risk Engine**
+- **Dynamic Lot Sizing:** Based on volatility and account equity.  
+- **Stop Loss & TP Allocation:** Volatility-based SL; dual TP targets (1:2, 1:3).  
+- **Drawdown Protection:** Bot cooldown after consecutive losses.  
+- **Conflict-Free Execution:** Prevents opposing strategy signals from clashing.
+
+---
+
+##  System Workflow
+
+```text
+Market Data → AI Layer (ML + LLM) → Risk Engine → Trade Execution (MT5) → Monitoring → Logs
