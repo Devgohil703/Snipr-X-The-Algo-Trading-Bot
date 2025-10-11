@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # General OS files
 .DS_Store
 Thumbs.db
@@ -62,3 +63,6 @@ build/
 =======
 BOT--master/myapp/node_modules/
 >>>>>>> origin/push-node-modules
+=======
+BOT--master/myapp/node_modules/
+>>>>>>> origin/main-backup-20251011180734
