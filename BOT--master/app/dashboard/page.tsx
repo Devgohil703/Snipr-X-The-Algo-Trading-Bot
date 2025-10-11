@@ -1,16 +1,15 @@
-import Header from "@/components/header";
-import DashboardStats from "@/components/dashboard-stats";
-import BotControls from "@/components/bot-controls";
-import TradingChart from "@/components/trading-chart";
-import PerformanceChart from "@/components/performance-chart";
-import SmartSummary from "@/components/smart-summary";
-import ActivityLog from "@/components/activity-log";
-import MT5Connector from "@/components/mt5-connector";
-import ProtectedRoute from "@/components/protected-route";
-// ChatBot removed
-import OnboardingTour from "@/components/onboarding-tour";
-import AssistantWidget from "@/components/assistant-widget";
-import MT5TradePanel from "@/components/mt5-trade-panel";
+import Header from "@/components/header"
+import DashboardStats from "@/components/dashboard-stats"
+import BotControls from "@/components/bot-controls"
+import TradingChart from "@/components/trading-chart"
+import PerformanceChart from "@/components/performance-chart"
+import SmartSummary from "@/components/smart-summary"
+import ActivityLog from "@/components/activity-log"
+import MT5Connector from "@/components/mt5-connector"
+import ProtectedRoute from "@/components/protected-route"
+import ChatBot from "@/components/chatbot"
+import OnboardingTour from "@/components/onboarding-tour"
+import MT5TradePanel from "@/components/mt5-trade-panel"
 
 export default function DashboardPage() {
   return (
@@ -49,10 +48,9 @@ export default function DashboardPage() {
             <MT5TradePanel />
           </div>
         </main>
-        {/* ChatBot removed */}
-        <AssistantWidget />
+        <ChatBot />
         <OnboardingTour />
       </div>
     </ProtectedRoute>
-  );
+  )
 }
