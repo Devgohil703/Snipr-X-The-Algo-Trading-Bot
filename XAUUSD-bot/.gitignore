@@ -1,0 +1,60 @@
+# Ignore nested node_modules from BOT--master backups
+BOT--master/myapp/node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+venv_*/
+.venv/
+env/
+.env
+.env.*
+
+# Packaging
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Data / artifacts
+*.pkl
+*.pickle
+*.joblib
+*.h5
+*.hdf5
+*.csv
+*.tsv
+*.parquet
+*.db
+*.sqlite
+*.zip
+*.tar
+*.tar.gz
+*.bak
+*.tmp
+.cache/
+
+# Logs
+logs/
+*.log
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Node
+node_modules/
+
+# Misc
+__test_output__/
+.coverage
