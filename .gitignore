@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # General OS files
 .DS_Store
 Thumbs.db
@@ -58,3 +59,6 @@ build/
 # Misc
 *.swp
 *.swo
+=======
+BOT--master/myapp/node_modules/
+>>>>>>> origin/push-node-modules
